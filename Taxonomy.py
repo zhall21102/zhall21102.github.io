@@ -117,20 +117,20 @@ def log():
     for level in range(len(levels)):
         if level != 0:
             try:
-                if subject[levels[level]]+'.html' not in os.listdir(dirname+'\Webpage\Pages'):
+                if subject[levels[level]]+'.html' not in os.listdir(dirname+'\\Pages'):
                     #Write new File
-                    readFile = open(dirname+'\Webpage\Pages\Examples\Middle.html', 'r')
+                    readFile = open(dirname+'\\Pages\\Examples\\Middle.html', 'r')
                     toWrite = readFile.read()
                     toWrite = toWrite.replace('{NAME}', subject[levels[level]])
                     toWrite = toWrite.replace('{RANK}',levels[level])
                     toWrite = toWrite.replace('{PARENT}', subject[levels[level-1]])
                     readFile.close()
-                    f = open(dirname+'\Webpage\Pages\\'+subject[levels[level]]+'.html', 'w')
+                    f = open(dirname+'\\Pages\\'+subject[levels[level]]+'.html', 'w')
                     f.write(toWrite)
                     f.close()#End
                     
                     #Update Parent
-                    f = open(dirname+'\Webpage\Pages\\'+subject[levels[level-1]]+'.html', 'r')
+                    f = open(dirname+'\\Pages\\'+subject[levels[level-1]]+'.html', 'r')
                     toAdd = '<p style="font-size:3vw;"><a href="{CHILD}.html">{CHILD}</a></p>'.replace('{CHILD}',subject[levels[level]])
                     end=''
                     tmp = f.read().split('<div')
@@ -139,7 +139,21 @@ def log():
                         if thing !=0:
                             end += tmp[thing]+'<div'
                     f.close()
-                    f = open(dirname+'\Webpage\Pages\\'+subject[levels[level-1]]+'.html', 'w')
+                    f = open(dirname+'\\Pages\\'+subject[levels[level-1]]+'.html', 'w')
+                    f.write(end[:-4])
+                    f.close()
+
+                    #Update Inventory
+                    f = open(dirname+'\\Inventory.html', 'r')
+                    toAdd = '<p style="font-size:3vw;"><a href="Pages/{CHILD}.html">{CHILD}</a></p>'.replace('{CHILD}',subject[levels[level]])
+                    end=''
+                    tmp = f.read().split('<div')
+                    end+=(tmp[0]+toAdd+'<div')
+                    for thing in range(len(tmp)):
+                        if thing !=0:
+                            end += tmp[thing]+'<div'
+                    f.close()
+                    f = open(dirname+'\\Inventory.html', 'w')
                     f.write(end[:-4])
                     f.close()
                     print('Added: '+subject[levels[level]])
