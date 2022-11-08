@@ -36,11 +36,28 @@ def call(HREF, titles=[],links=[]):
         tmp1=str(thread).replace('<i>','').replace('<b>','').replace('\xa0',' ')
         start=tmp1.find('">')
         tmp2=tmp1[start+2:]
-        if '">' in tmp2 and '<a' not in tmp2[2:] or '†' in tmp2 or tmp2[0] == '<':
-            tmp2=tmp2[tmp2.find('">')+2:]
-        end=tmp2.find('<')
-        step3.append(tmp2[:end])
-        
+        if '</b' in tmp2 or '</i' in tmp2:
+            if '</b' in tmp2:
+                tmp2 = tmp2[:tmp2.index('</b')]
+            if '</i' in tmp2:
+                tmp2 = tmp2[:tmp2.index('</i')]
+        else:
+            if '</a' in tmp2:
+                tmp2 = tmp2[:tmp2.index('</a')]
+            if '">' in tmp2:
+                tmp2 = tmp2[tmp2.index('">')+2:]
+        if '†' in tmp2:
+            tmp2 = tmp2.replace('†','')
+            if '/Extinction' in tmp2:
+                tmp2 = tmp2[tmp2.index('ion"></a>')+10:]
+        if '<' in tmp2[len(tmp2)//2:]:
+            tmp2 = tmp2[1:]
+            tmp2 = tmp2[:tmp2.index('<')]
+        while '>' in tmp2:
+            tmp2 = tmp2[tmp2.index('>')+1:]
+        if tmp2[-1] == ' ':
+            tmp2 = tmp2[:-1]
+        step3.append(tmp2)
     dictionary = {}
     for e in range(len(step3)):
         try:
