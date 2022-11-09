@@ -50,6 +50,8 @@ def call(HREF, titles=[],links=[]):
             tmp2 = tmp2.replace('†','')
             if '/Extinction' in tmp2:
                 tmp2 = tmp2[tmp2.index('ion"></a>')+10:]
+        if '<sup' in tmp2:
+            tmp2 = tmp2[:tmp2.index('<sup')]
         if '<' in tmp2[len(tmp2)//2:]:
             tmp2 = tmp2[1:]
             tmp2 = tmp2[:tmp2.index('<')]
