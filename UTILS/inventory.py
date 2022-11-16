@@ -60,3 +60,10 @@ def clearInv():
     w.write(f)
     w.close()
 
+def checkInv():
+    file = open(dirname+'\\Inventory.html')
+    f = file.read()
+    file.close()
+    print(f.count('<a')-1)
+    
+
