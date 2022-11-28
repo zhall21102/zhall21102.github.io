@@ -237,8 +237,8 @@ def removeErrors():
     for error in errors:
         removeFile.removeFile(error)
 
-printDead()
-print()
+#printDead()
+#print()
 printAll()
 cont = input("Remove errors? Y/N\n")
 while cont.lower() != 'n':

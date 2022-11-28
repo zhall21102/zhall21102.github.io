@@ -1,7 +1,7 @@
 import os
 dirname = os.path.dirname(__file__)[:-6]
 def inventory():
-    '''Reompile the inventory'''
+    '''Recompile the inventory'''
     clearInv()
     f = open(dirname+'\\Inventory.html')
     inv = f.read()
