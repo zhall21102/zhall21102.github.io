@@ -179,24 +179,56 @@ def log():
                 break
     print()
 
-def manualLog():
+def manualDriver():
+    block = input("{Parent}/{toAdd} or a binomial name\n")
+    if '/' in block:
+        block = block.split('/')
+        parent = block[0]
+        current = block[1]
+    else:
+        parent = block[:block.index(' ')]
+        current = block[0] + '.' + block[block.index(' '):]
+    print(manualLog(parent,current))
+
+def massAdd():
+    f = open('toAdd.txt')
+    text = f.read()
+    f.close()
+    text = text.split('\n')
+    if ' ' not in text[0]: #Manually set parent
+        parent = text[0]
+        for entry in text[1:]:
+            first = entry[:entry.find(' ')]
+            second = entry[entry.find(' ')+1:]
+            if ' ' in second:
+                second = second[:second.find(' ')]
+            current = first + ' ' + second
+            print(manualLog(parent,current))
+    else: #Automated parent
+        for entry in text:
+            parent = entry[:entry.index(' ')]
+            if ' ' in entry[entry.index(' ')+1:]:
+                toGo = entry[entry.index(' ')+1:]
+                current = toGo[:toGo.index(' ')]
+                current = parent[0] + '. ' + current
+            else:
+                current = entry[0] + '. ' + entry[entry.index(' ')+1:]
+            print(manualLog(parent,current))
+
+    
+def manualLog(parent, current):
     '''Manually log a child to given its parent'''
     levels = ['Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus', 'Species']
-    parent = input("What is the parent, Ex. \"Homo\"\n")
-    if parent+'.html' not in os.listdir(dirname+'\\Pages'):
-        print("Parent does not exist\n")
-        return
-    current = input("What do you want to add, Ex. \"H. sapiens\"\n")
+    if parent+'.html' not in os.listdir(dirname+'\\Pages\\'):
+        return "Parent does not exist"
     if ' ' in current:
         if '.' not in current:
             temp = current[current.index(' '):]
             current = current[0] + '.' + temp
-    if current+'.html' in os.listdir(dirname+'\\Pages'):
-        print("Page already exists\n")
-        return
+    if current+'.html' in os.listdir(dirname+'\\Pages\\'):
+        return "Page already exists"
     if current == '' or current == 'v':
-        print()
-        return
+        return "Child messed up"
     f = open(dirname+'\\Pages\\'+parent+'.html', 'r')
     text = f.read()
     f.close()
@@ -241,8 +273,7 @@ def manualLog():
     f = open(dirname+'\\Inventory.html', 'w')
     f.write(end[:-4])
     f.close()
-    print('Added: '+current)
-    print()
+    return ('Added: '+current)
 
-while __name__ == '__main__':
-    manualLog()
+if __name__ == '__main__':
+    massAdd()
