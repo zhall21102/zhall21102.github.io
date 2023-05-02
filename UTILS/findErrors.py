@@ -208,41 +208,38 @@ def printAll():
         if error[0] not in errors:
             errors.append(error[0])
             printList.append(error)
+    print("findErrors checked")
     for error in deepSearch():
         if error[0] not in errors:
             errors.append(error[0])
             printList.append(error)
+    print("deepSearch checked")
     for error in unreachable():
         if error[0] not in errors:
             errors.append(error[0])
             printList.append(error)
+    print("unreachable checked")
     if len(printList) > 0:
         for error in printList:
             print(error[0],error[1])
     else:
         print("No errors")
+    errorList = []
+    for e in errors:
+        errorList.append(error[0])
+    return errorList
 
-def removeErrors():
+def removeErrors(errors):
     '''Delete trace of any error found except deadLinks'''
-    errors = []
-    for error in findErrors():
-        if error[0] not in errors:
-            errors.append(error[0])
-    for error in deepSearch():
-        if error[0] not in errors:
-            errors.append(error[0])
-    for error in unreachable():
-        if error[0] not in errors:
-            errors.append(error[0])
     for error in errors:
         removeFile.removeFile(error)
 
 #printDead()
 #print()
-printAll()
+errors = printAll()
 cont = input("Remove errors? Y/N\n")
 while cont.lower() != 'n':
-    removeErrors()
-    printAll()
+    removeErrors(errors)
+    errors = printAll()
     cont = input("Remove errors? Y/N\n")
 

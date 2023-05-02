@@ -194,26 +194,29 @@ def massAdd():
     f = open('toAdd.txt')
     text = f.read()
     f.close()
+    text=text.replace(',','')
     text = text.split('\n')
     if ' ' not in text[0]: #Manually set parent
         parent = text[0]
         for entry in text[1:]:
-            first = entry[:entry.find(' ')]
-            second = entry[entry.find(' ')+1:]
-            if ' ' in second:
-                second = second[:second.find(' ')]
-            current = first + ' ' + second
-            print(manualLog(parent,current))
+            if entry:
+                first = entry[:entry.find(' ')]
+                second = entry[entry.find(' ')+1:]
+                if ' ' in second:
+                    second = second[:second.find(' ')]
+                current = first + ' ' + second
+                print(manualLog(parent,current))
     else: #Automated parent
         for entry in text:
-            parent = entry[:entry.index(' ')]
-            if ' ' in entry[entry.index(' ')+1:]:
-                toGo = entry[entry.index(' ')+1:]
-                current = toGo[:toGo.index(' ')]
-                current = parent[0] + '. ' + current
-            else:
-                current = entry[0] + '. ' + entry[entry.index(' ')+1:]
-            print(manualLog(parent,current))
+            if entry:
+                parent = entry[:entry.index(' ')]
+                if ' ' in entry[entry.index(' ')+1:]:
+                    toGo = entry[entry.index(' ')+1:]
+                    current = toGo[:toGo.index(' ')]
+                    current = parent[0] + '. ' + current
+                else:
+                    current = entry[0] + '. ' + entry[entry.index(' ')+1:]
+                print(manualLog(parent,current))
 
     
 def manualLog(parent, current):

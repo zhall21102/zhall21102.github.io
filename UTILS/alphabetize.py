@@ -49,9 +49,16 @@ def sortAll():
     '''sort every file in Pages'''
     sortKingdoms()
     inventory.sortInv()
+    toSort = len(os.listdir(dirname+'\\Pages'))
+    progress = 0
+    count = 0
     for file in os.listdir(dirname+'\\Pages'):
         if file[-1] == 'l':
             sortFile(file)
+        count += 1
+        if (count / toSort * 100 % 10) < 1 and int(count / toSort * 100) > progress:
+            progress = int(count / toSort * 100)
+            print(str(progress) + "%")
     print("Sorted!")
     
 
