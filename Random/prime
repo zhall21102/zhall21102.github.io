@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>PrimeCheck</title>
+	</head>
+	<body style="background-color:rgb(255, 251, 212);">
+        <h3 style="text-align:center;font-size:3vw;"> Enter a number </h1>
+        <div style="text-align:center;">
+            <input placeholder="Enter a number" type="number" id="num" value="" style="font-size:3vw;">   
+            <button id="check" onclick="primeCheck()" style="font-size:3vw;">Check</button>    
+        </div>
+        <p id="demo" style="text-align:center;font-size:3vw;"></p>
+	</body>
+    <script>
+    var input = document.getElementById("num");
+    input.addEventListener("keypress", function(event) 
+    {
+        if (event.key === "Enter") 
+        {
+            event.preventDefault();
+            document.getElementById("check").click();
+        }
+    });
+    </script>
+    <script>
+    function primeCheck()
+    {
+        let num = document.getElementById("num").value;
+        for(let i = 2; i < Math.sqrt(num)+1; i++)
+        {
+            if(num % i == 0)
+            {   
+                let div = num / i;
+                document.getElementById("demo").innerHTML = (num.toString()+" is not prime: "+i.toString()+"*"+div.toString());
+                return;
+            }
+        }
+        document.getElementById("demo").innerHTML = (num.toString() + " is prime");
+    }
+    </script>
+</html>
