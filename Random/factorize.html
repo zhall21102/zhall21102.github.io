@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>factorize</title>
+	</head>
+	<body style="background-color:rgb(255, 251, 212);">
+        <h3 style="text-align:center;font-size:3vw;"> Enter a number </h1>
+        <div style="text-align:center;">
+            <input placeholder="Enter a number" type="number" id="num" value="" style="font-size:3vw;">   
+            <button id="factorize" onclick="factorize()" style="font-size:3vw;">Check</button>    
+        </div>
+        <p id="demo" style="text-align:center;font-size:3vw;"></p>
+	</body>
+    <script>
+    var input = document.getElementById("num");
+    input.addEventListener("keypress", function(event) 
+    {
+        if (event.key === "Enter") 
+        {
+            event.preventDefault();
+            document.getElementById("factorize").click();
+        }
+    });
+    </script>
+    <script>
+    function factorize()
+    {
+        let num = document.getElementById("num").value;
+        document.getElementById("demo").innerHTML = ("The factors of " + num.toString() + " are <br>");
+        while(num % 2 == 0)
+        {
+            document.getElementById("demo").innerHTML += ("2<br>");
+            num = num / 2;
+        }     
+         
+        for(let i = 3; i < Math.sqrt(num) + 1; i += 2)
+            while(num % i == 0)
+            {
+                document.getElementById("demo").innerHTML += (i.toString() + "<br>");
+                num = num / i;
+            }
+                
+        if(num > 2)
+        {
+            document.getElementById("demo").innerHTML += (num.toString());
+        }
+    }
+    </script>
+</html>
